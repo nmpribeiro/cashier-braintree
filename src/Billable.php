@@ -294,7 +294,9 @@ trait Billable
         if (! $response->success) {
             throw new Exception('Braintree was unable to create a payment method: '.$response->message);
         }
-
+        
+        $this->braintree_id = $response->customer->id; //quick fix for "expected customer id to be set"
+        
         $paypalAccount = $response->paymentMethod instanceof PaypalAccount;
 
         $this->forceFill([
